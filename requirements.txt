@@ -17,7 +17,8 @@ https://pytorch-geometric.com/whl
    pip install biopython==1.79 numpy==1.23 pandas==1.5.3 timm==0.6.13 yacs==0.1.8 seaborn==0.13.2 scikit-learn==1.2.2
    pip install scipy joblib termcolor
    pip install rdkit
-   pip install transformers sentencepiece protobuf
+   # The following line is for setting up the environment required for ProtT5 encoding. You can also create a separate environment specifically for ProtT5 encoding [https://github.com/agemagician/ProtTrans].
+   pip install transformers==4.34.1 sentencepiece==0.1.99 protobuf==3.20.3
 
 4. Install pytorch geometric
    pip install --no-index torch-scatter -f https://pytorch-geometric.com/whl/torch-2.0.0+cu117.html
