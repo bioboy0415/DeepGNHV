@@ -1,0 +1,27 @@
+"""
+GPU: NVIDIA RTX 3090
+CUDA Version: 12.0
+
+Please select the appropriate version of PyTorch Geometric to install according to your computer's CUDA version
+https://pytorch-geometric.com/whl
+"""
+
+1. conda environment configuration
+   conda create -n DeepGNHV python==3.9.16
+   conda activate DeepGNHV
+
+2.Install 2.0.0 pytorch
+   pip install torch==2.0.0 torchvision==0.15.1 torchaudio==2.0.1
+
+3. Install dependencies
+   pip install biopython==1.79 numpy==1.23 pandas==1.5.3 timm==0.6.13 yacs==0.1.8 seaborn==0.13.2 scikit-learn==1.2.2
+   pip install scipy joblib termcolor
+   pip install rdkit
+   pip install transformers sentencepiece protobuf
+
+4. Install pytorch geometric
+   pip install --no-index torch-scatter -f https://pytorch-geometric.com/whl/torch-2.0.0+cu117.html
+   pip install --no-index torch-sparse -f https://pytorch-geometric.com/whl/torch-2.0.0+cu117.html
+   pip install --no-index torch-cluster -f https://pytorch-geometric.com/whl/torch-2.0.0+cu117.html
+   pip install --no-index torch-spline-conv -f https://pytorch-geometric.com/whl/torch-2.0.0+cu117.html
+   pip install torch-geometric==2.3.0
