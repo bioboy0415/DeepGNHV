@@ -8,7 +8,7 @@
 Graph neural network with protein pretrained language model for human virus protein–protein interactions prediction.
 
 ## ⚙️ Environment Setup
-- Please follow the steps in the requirements.txt file to set up the environment.
+- Please follow the steps in the [requirements.txt](https://github.com/bioboy0415/DeepGNHV/blob/master/requirements.txt) to set up the environment.
 
 
 ## 📊 Prepare Data
