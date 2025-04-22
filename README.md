@@ -13,7 +13,7 @@ Graph neural network with protein pretrained language model for human virus prot
 
 ## 📊 Prepare Data
 1. Download the predicted human protein structure models from the [Alphafold2 Database](https://ftp.ebi.ac.uk/pub/databases/alphafold/latest/UP000005640_9606_HUMAN_v4.tar) and place the compressed file in the directory ".DeepGNHV/data/monomer_data/human_processed".
-2. Download the virus protein structure models predicted using the locally deployed AlphaFold2 from [Zenodo](https://zenodo.org/records/15180938?token=eyJhbGciOiJIUzUxMiJ9.eyJpZCI6IjY3MTg5M2JhLTY4ZjYtNGJmNy1hYjExLTc5NGM5MGU2YmVhMiIsImRhdGEiOnt9LCJyYW5kb20iOiI3N2YwZmNkNmE3OGRlOWNlNDdlMDM2OWRhZDczN2VjZiJ9.XpEXyRhbqIrsnq9fIde5iXyXpvJDty_IfCSTIzOp3OoaSS8a8N0VORPCLQqkG_pk2QgtLjxenrJg1xOJf8aFlg) and place the compressed file in the directory ".DeepGNHV/data/monomer_data/virus_processed".
+2. Download the virus protein structure models predicted using the locally deployed AlphaFold2 from [Zenodo](https://zenodo.org/records/15180938) and place the compressed file in the directory ".DeepGNHV/data/monomer_data/virus_processed".
 3. Execute the script below to preprocess the source data from pdb files and [protT5](https://github.com/agemagician/ProtTrans).
 
 ```bash
