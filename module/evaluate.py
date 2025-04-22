@@ -48,11 +48,8 @@ def evaluate(config, logger):
         logger.info(f'Not specify label weight')
         criterion = nn.CrossEntropyLoss(reduction = config.Train.Criterion_Reduction,).cuda() 
     
-    
-    if config.MODEL.DeepGNHV.return_attention_weights:
-        model.cuda().eval()
-        explaination_from_attention(config, logger, model, Datasets_Eval)
-    elif config.DATA.Eval.Explain:
+
+    if config.DATA.Eval.Explain:
         model.cuda()
         explainer_main(config, logger, model, Datasets_Eval, DataLoader_Eval)
     else:
@@ -250,58 +247,3 @@ def build_Eval_datasets(config, logger):
                                     ,collate_fn = Graph_Collect_Func)
     return DataLoader_Eval, Datasets_Eval
 
-
-# """
-def explaination_from_attention(config, logger, model, Datasets_Eval):
-    Eval_Explain_Dir = config.DATA.Eval.Explain_Dir
-    Explaination_Protein_Pair = dict()
-    DataLoader_Eval_explaination = DataLoader(Datasets_Eval
-                                            , batch_size = 1
-                                            , shuffle    = False
-                                            , drop_last  = False
-                                            , pin_memory = True
-                                            , collate_fn = Graph_Collect_Func)
-
-    for Samples_and_Labels in DataLoader_Eval_explaination:
-        Protein_Pair_idx, Protein1_length, Protein2_length, Protein1_Embedding_graphs, Protein2_Embedding_graphs, Labels = Samples_and_Labels
-        Labels              = Labels.type(torch.float32).reshape(-1,2).cuda(non_blocking=True)
-        if Labels[1] == 1:
-            Protein1_Name, Protein2_Name, Label = [Datasets_Eval.Sample_List[id] for id in Protein_Pair_idx][0]
-            # Explaination_Protein_Pair.extend(Protein_Pair_Name[0])
-            
-            Protein1_feat       = Protein1_Embedding_graphs.x.cuda(non_blocking=True)
-            Protein2_feat       = Protein2_Embedding_graphs.x.cuda(non_blocking=True)
-            Protein1_edge_index = Protein1_Embedding_graphs.edge_index.cuda(non_blocking=True)
-            Protein2_edge_index = Protein2_Embedding_graphs.edge_index.cuda(non_blocking=True)
-            Protein1_batch      = Protein1_Embedding_graphs.batch.cuda(non_blocking=True)
-            Protein2_batch      = Protein2_Embedding_graphs.batch.cuda(non_blocking=True)
-            
-            
-            Samples = (Protein_Pair_idx
-                        , Protein1_feat, Protein1_edge_index, Protein1_batch
-                        , Protein2_feat, Protein2_edge_index, Protein2_batch
-                        , None, None
-                        , True)
-            
-            protein1_edges_attention_weight_list_numpy = []
-            protein2_edges_attention_weight_list_numpy = []
-                
-            zhat, protein1_edges_attention_weight_list, protein2_edges_attention_weight_list = model.forward(*Samples)
-
-            for item in protein1_edges_attention_weight_list:
-                protein1_edges_attention_weight_list_numpy.append(item.cpu().numpy())
-            for item in protein2_edges_attention_weight_list:
-                protein2_edges_attention_weight_list_numpy.append(item.cpu().numpy())
-            
-            Explaination_Protein_Pair[f'{Protein1_Name}_{Protein2_Name}'] = dict(protein1_edges_attention_weight_list_numpy  = protein1_edges_attention_weight_list_numpy
-                                                                                , protein2_edges_attention_weight_list_numpy = protein2_edges_attention_weight_list_numpy
-                                                                                , Protein1_edge_index = Protein1_edge_index.cpu().numpy()
-                                                                                , Protein2_edge_index = Protein2_edge_index.cpu().numpy()
-                                                                                , Protein1_length = int(Protein1_length.cpu()), Protein2_length = int(Protein2_length.cpu())
-                                                                                )
-    Eval_Explain_File_path = os.path.join(Eval_Explain_Dir, f'{config.MODEL.DeepGNHV.Graph_Type}_explaination.pth')
-    with open(Eval_Explain_File_path, 'wb') as h:
-        pickle.dump(Explaination_Protein_Pair, h)
-    print(f'Successfully treated {Eval_Explain_File_path}')
- 
-# """
