@@ -7,7 +7,7 @@ is_false=0
 GPU_Id="0"
 
 Model_Name="DeepGNHV"
-VF_range_list=("1")
+VF_range_list=("1") # ("1" "2" "3" "4" "5")
 GNN_Type="GATConv"
 Graph_Type="Undirectedgraph"
 Dropout_Rates="0.3"

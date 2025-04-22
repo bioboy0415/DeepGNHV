@@ -12,10 +12,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
     monomoer_dir = Path(args.monomoer_dir)
 
-    tokenizer = T5Tokenizer.from_pretrained('/home/lyjiang/.cache/huggingface/hub/models--Rostlab--prot_t5_xl_uniref50/snapshots/973be27c52ee6474de9c945952a8008aeb2a1a73', do_lower_case=False)
-    model     = T5EncoderModel.from_pretrained('/home/lyjiang/.cache/huggingface/hub/models--Rostlab--prot_t5_xl_uniref50/snapshots/973be27c52ee6474de9c945952a8008aeb2a1a73').eval()
-
-
+    tokenizer = T5Tokenizer.from_pretrained('Rostlab/prot_t5_xl_uniref50', do_lower_case=False)
+    model     = T5EncoderModel.from_pretrained("Rostlab/prot_t5_xl_uniref50").eval()
+    # "Rostlab/prot_t5_xl_uniref50" can be replaced with the file at "/home/username/.cache/huggingface/hub/models--Rostlab--prot_t5_xl_uniref50/snapshots/xxxxxxxxxxx"
+    # You can also implement ProtT5 by following the guidance at https://github.com/agemagician/ProtTrans
+    
     for item in os.listdir(monomoer_dir):
         fasta_path                = monomoer_dir/item/f'{item}.fasta'
         token_representation_path = monomoer_dir/item/f'{item}.protT5_tokens'
@@ -33,10 +34,4 @@ if __name__ == '__main__':
             protein_protT5_embedding = embedding_rpr.last_hidden_state[0,:-1].cpu()
             torch.save(protein_protT5_embedding,token_representation_path)
             print(f'Successfully treated {item}')
-
-'''
-If the model cannot be successfully loaded, please replace the loading path (Rostlab/prot_t5_xl_uniref50) with the path to the locally downloaded model located in the /home/Username/.cache/huggingface/hub/models--Rostlab--prot_t5_xl_uniref50/snapshots/xxxxxx subdirectory.
-
-/home/lyjiang/.cache/huggingface/hub/models--Rostlab--prot_t5_xl_uniref50/snapshots/973be27c52ee6474de9c945952a8008aeb2a1a73
-'''
 
