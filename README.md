@@ -5,7 +5,7 @@
 ![PyG](https://img.shields.io/badge/pyg-2.3.0-blue.svg)
 ![Platform](https://img.shields.io/badge/platform-linux-blue.svg)
 
-Graph neural network with protein pretrained language model for human virus protein–protein interactions prediction.
+Graph neural network integrated with pre-trained protein language model for predicting human–virus protein–protein interactions.
 
 ## ⚙️ Environment Setup
 - Please follow the steps in the [requirements.txt](https://github.com/bioboy0415/DeepGNHV/blob/master/requirements.txt) to set up the environment.
